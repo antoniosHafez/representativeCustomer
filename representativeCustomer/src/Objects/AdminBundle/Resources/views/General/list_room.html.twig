@@ -1,0 +1,7 @@
+{% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
+
+{% block field %}
+    {% if object.room.getHotel() %}
+        {{ object.room.getHotel() }} - {{ object.room }} 
+    {% endif %}
+{% endblock %}

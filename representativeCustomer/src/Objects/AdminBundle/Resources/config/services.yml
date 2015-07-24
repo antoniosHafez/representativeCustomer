@@ -1,0 +1,12 @@
+services:
+    customer_admin:
+        class: Objects\AdminBundle\Admin\CustomerAdmin
+        tags:
+           - { name: sonata.admin, manager_type: orm, label: Customer }
+        arguments: [null, Objects\AdminBundle\Entity\Customer, SonataAdminBundle:CRUD]
+        
+    representative_admin:
+        class: Objects\AdminBundle\Admin\RepresentativeAdmin
+        tags:
+           - { name: sonata.admin, manager_type: orm, label: Representative }
+        arguments: [null, Objects\AdminBundle\Entity\Representative, SonataAdminBundle:CRUD]

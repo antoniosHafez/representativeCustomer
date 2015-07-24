@@ -1,0 +1,148 @@
+<?php
+
+namespace Objects\AdminBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
+/**
+ * Zone
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="Objects\AdminBundle\Entity\ZoneRepository")
+ */
+class Zone
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=255)
+     */
+    private $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="text", nullable=true)
+     */
+    private $description;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="\Objects\AdminBundle\Entity\Advertisements", mappedBy="zone", cascade={"persist", "remove"}, orphanRemoval=true)
+     */
+    private $advertisements;
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return Zone
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Zone
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->advertisements = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add advertisements
+     *
+     * @param \Objects\AdminBundle\Entity\Advertisements $advertisements
+     * @return Zone
+     */
+    public function addAdvertisement(\Objects\AdminBundle\Entity\Advertisements $advertisements)
+    {
+        $this->advertisements[] = $advertisements;
+
+        return $this;
+    }
+
+    /**
+     * Remove advertisements
+     *
+     * @param \Objects\AdminBundle\Entity\Advertisements $advertisements
+     */
+    public function removeAdvertisement(\Objects\AdminBundle\Entity\Advertisements $advertisements)
+    {
+        $this->advertisements->removeElement($advertisements);
+    }
+
+    /**
+     * Get advertisements
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAdvertisements()
+    {
+        return $this->advertisements;
+    }
+    
+    public function __toString() {
+        if($this->name)
+            return $this->name;
+        else    
+            return "Zone";
+    }
+    
+}

@@ -1,0 +1,268 @@
+<?php
+
+namespace Objects\AdminBundle\Entity;
+
+use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Advertisements
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="Objects\AdminBundle\Entity\AdvertisementsRepository")
+ */
+class Advertisements
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     * @Assert\NotBlank
+     * @ORM\Column(name="name", type="string", length=255)
+     */
+    private $name;
+
+    /**
+     * @var string
+     * @Assert\NotBlank
+     * @ORM\Column(name="content", type="text")
+     */
+    private $content;
+    
+    /**
+     * @var boolean
+     * @ORM\Column(name="active", type="boolean")
+     */
+    private $active = true;
+    
+    /**
+     * @var \DateTime
+     * @ORM\Column(name="expire_date", type="date", nullable=true)
+     */
+    private $expireDate;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="\Objects\AdminBundle\Entity\Type",inversedBy="advertisements")
+     * @ORM\JoinColumn(name="type_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
+     */
+    private $type;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="\Objects\AdminBundle\Entity\Zone",inversedBy="advertisements")
+     * @ORM\JoinColumn(name="zone_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
+     */
+    private $zone;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="\Objects\AdminBundle\Entity\Groups")
+     * @ORM\JoinTable(name="advertisement_group",
+     *     joinColumns={@ORM\JoinColumn(name="advertisement_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="group_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)}
+     * )
+     * @var \Doctrine\Common\Collections\ArrayCollection $userRoles
+     */
+    private $advertisementGroups;
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return Advertisements
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set content
+     *
+     * @param string $content
+     * @return Advertisements
+     */
+    public function setContent($content)
+    {
+        $this->content = $content;
+
+        return $this;
+    }
+
+    /**
+     * Get content
+     *
+     * @return string 
+     */
+    public function getContent()
+    {
+        return $this->content;
+    }
+
+    /**
+     * Set active
+     *
+     * @param boolean $active
+     * @return Advertisements
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+
+        return $this;
+    }
+
+    /**
+     * Get active
+     *
+     * @return boolean 
+     */
+    public function getActive()
+    {
+        return $this->active;
+    }
+
+    /**
+     * Set expireDate
+     *
+     * @param \DateTime $expireDate
+     * @return Advertisements
+     */
+    public function setExpireDate($expireDate)
+    {
+        $this->expireDate = $expireDate;
+
+        return $this;
+    }
+
+    /**
+     * Get expireDate
+     *
+     * @return \DateTime 
+     */
+    public function getExpireDate()
+    {
+        return $this->expireDate;
+    }
+
+    /**
+     * Set type
+     *
+     * @param \Objects\AdminBundle\Entity\Type $type
+     * @return Advertisements
+     */
+    public function setType(\Objects\AdminBundle\Entity\Type $type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return \Objects\AdminBundle\Entity\Type 
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * Set zone
+     *
+     * @param \Objects\AdminBundle\Entity\Zone $zone
+     * @return Advertisements
+     */
+    public function setZone(\Objects\AdminBundle\Entity\Zone $zone)
+    {
+        $this->zone = $zone;
+
+        return $this;
+    }
+
+    /**
+     * Get zone
+     *
+     * @return \Objects\AdminBundle\Entity\Zone 
+     */
+    public function getZone()
+    {
+        return $this->zone;
+    }
+    
+    public function __toString() {
+        if($this->name)
+            return $this->name;
+        else    
+            return "Advertisment";
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->advertisementGroups = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add advertisementGroups
+     *
+     * @param \Objects\AdminBundle\Entity\Groups $advertisementGroups
+     * @return Advertisements
+     */
+    public function addAdvertisementGroup(\Objects\AdminBundle\Entity\Groups $advertisementGroups)
+    {
+        $this->advertisementGroups[] = $advertisementGroups;
+
+        return $this;
+    }
+
+    /**
+     * Remove advertisementGroups
+     *
+     * @param \Objects\AdminBundle\Entity\Groups $advertisementGroups
+     */
+    public function removeAdvertisementGroup(\Objects\AdminBundle\Entity\Groups $advertisementGroups)
+    {
+        $this->advertisementGroups->removeElement($advertisementGroups);
+    }
+
+    /**
+     * Get advertisementGroups
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAdvertisementGroups()
+    {
+        return $this->advertisementGroups;
+    }
+}

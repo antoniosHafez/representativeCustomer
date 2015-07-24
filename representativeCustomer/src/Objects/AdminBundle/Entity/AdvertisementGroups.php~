@@ -1,0 +1,92 @@
+<?php
+
+namespace Objects\AdminBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * AdvertisementGroups
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="Objects\AdminBundle\Entity\AdvertisementGroupsRepository")
+ */
+class AdvertisementGroups
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="\Objects\AdminBundle\Entity\Advertisements", inversedBy="advertisementGroups")
+     * @ORM\JoinColumn(name="advertisement_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
+     */
+    private $advertisement;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="\Objects\AdminBundle\Entity\Groups", inversedBy="advertisementGroups")
+     * @ORM\JoinColumn(name="group_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
+     */
+    private $group;
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set advertisement
+     *
+     * @param \Objects\AdminBundle\Entity\Advertisements $advertisement
+     * @return AdvertisementGroups
+     */
+    public function setAdvertisement(\Objects\AdminBundle\Entity\Advertisements $advertisement)
+    {
+        $this->advertisement = $advertisement;
+
+        return $this;
+    }
+
+    /**
+     * Get advertisement
+     *
+     * @return \Objects\AdminBundle\Entity\Advertisements 
+     */
+    public function getAdvertisement()
+    {
+        return $this->advertisement;
+    }
+
+    /**
+     * Set group
+     *
+     * @param \Objects\AdminBundle\Entity\Groups $group
+     * @return AdvertisementGroups
+     */
+    public function setGroup(\Objects\AdminBundle\Entity\Groups $group)
+    {
+        $this->group = $group;
+
+        return $this;
+    }
+
+    /**
+     * Get group
+     *
+     * @return \Objects\AdminBundle\Entity\Groups 
+     */
+    public function getGroup()
+    {
+        return $this->group;
+    }
+}
