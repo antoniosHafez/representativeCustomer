@@ -47,6 +47,10 @@ class CustomerAdmin extends Admin {
                 ->add('nationalID')
                 ->add('createdAt')
                 ->add('birthdate')
+                ->add('mobile')
+                ->add('city')
+                ->add('address')
+                ->add('representative', 'sonata_type_model_list')
         ;
     }
 
@@ -64,6 +68,9 @@ class CustomerAdmin extends Admin {
                     ->add('name')
                     ->add('nationalID')
                     ->add('birthdate', 'date')
+                    ->add('mobile')
+                    ->add('city')
+                    ->add('address')
                     ->add('representative', 'sonata_type_model_list')
                 ->end()
         ;

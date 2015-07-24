@@ -50,6 +50,28 @@ class Customer
     private $birthdate;
     
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="mobile", type="string", length=15)
+     */
+    private $mobile;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="address", type="string", length=255)
+     */
+    private $address;
+    
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="city", type="string", length=255)
+     */
+    private $city;
+    
+    /**
      * @ORM\ManyToOne(targetEntity="\Objects\AdminBundle\Entity\Representative",inversedBy="customers")
      * @ORM\JoinColumn(name="representative_id", referencedColumnName="id", nullable=true)
      */
@@ -190,5 +212,74 @@ class Customer
             return $this->name;
         else    
             return "Customer";
+    }
+
+    /**
+     * Set mobile
+     *
+     * @param string $mobile
+     * @return Customer
+     */
+    public function setMobile($mobile)
+    {
+        $this->mobile = $mobile;
+
+        return $this;
+    }
+
+    /**
+     * Get mobile
+     *
+     * @return string 
+     */
+    public function getMobile()
+    {
+        return $this->mobile;
+    }
+
+    /**
+     * Set address
+     *
+     * @param string $address
+     * @return Customer
+     */
+    public function setAddress($address)
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    /**
+     * Get address
+     *
+     * @return string 
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * Set city
+     *
+     * @param string $city
+     * @return Customer
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    /**
+     * Get city
+     *
+     * @return string 
+     */
+    public function getCity()
+    {
+        return $this->city;
     }
 }
